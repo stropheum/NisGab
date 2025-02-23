@@ -24,7 +24,7 @@
 /[Aa]ssets/Plugins/Editor/JetBrains*
 
 # Generated code from testing the tool
-/[Aa]ssets/Scripts/Generated/
+/[Aa]ssets/Scripts/Generated*
 
 # Visual Studio cache directory
 .vs/
