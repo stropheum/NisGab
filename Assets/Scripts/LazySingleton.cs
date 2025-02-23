@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NISGAB
+namespace NisGab
 {
     /// <summary>
     /// Singleton that initializes once accessed. Does not require 
@@ -17,9 +17,9 @@ namespace NISGAB
                 if (_instance == null)
                 {
                     var obj = new GameObject("<Singleton> " + typeof(T).Name);
-                    _instance = obj.AddComponent<T>();    
+                    _instance = obj.AddComponent<T>();
                 }
-                
+
                 return _instance;
             }
         }
