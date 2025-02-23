@@ -171,7 +171,7 @@ namespace NISGAB
                 {
                     string actionName = action.name;
                     sb.AppendLine("");
-                    sb.AppendLine("\t\tpublic void On" + actionName + "(InputAction.CallbackContext context)");
+                    sb.AppendLine("\t\tprivate void On" + actionName + "(InputAction.CallbackContext context)");
                     sb.AppendLine("\t\t{");
                     sb.AppendLine("\t\t\t" + actionName + "?.Invoke(context);");
                     sb.AppendLine("\t\t}");
