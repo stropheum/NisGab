@@ -47,8 +47,6 @@ namespace NISGAB
         {
             StringBuilder sb = new();
             
-            sb.AppendLine("using RTS.Core;"); 
-            sb.AppendLine("");
             sb.AppendLine("namespace " + OutputNamespace);
             sb.AppendLine("{");
             sb.AppendLine("\tpublic class InputEvent : LazySingleton<InputEvent>");
