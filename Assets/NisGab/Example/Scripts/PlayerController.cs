@@ -5,6 +5,7 @@ namespace NisGab.Example
 {
     public class PlayerController : MonoBehaviour
     {
+        /* TODO: Generate code from the default input action asset, then un-comment this code
         private void Awake()
         {
             InputEvent.Player.Interact += PlayerOnInteract;
@@ -26,5 +27,6 @@ namespace NisGab.Example
         {
             Debug.Log("UIOnClick");
         }
+        */
     }
 }

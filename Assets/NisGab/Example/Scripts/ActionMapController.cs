@@ -6,6 +6,7 @@ namespace NisGab.Example
 {
     public class ActionMapController : MonoBehaviour
     {
+        /* TODO: Generate code from the default input action asset, then un-comment this code
         [SerializeField] private Color _activeColor = Color.green;
         [SerializeField] private Color _inactiveColor = Color.red;
         [SerializeField] private Toggle _togglePlayerInputButton;
@@ -58,5 +59,6 @@ namespace NisGab.Example
         {
             InputEvent.Instance.EnableUIInput();
         }
+        */
     }
 }
