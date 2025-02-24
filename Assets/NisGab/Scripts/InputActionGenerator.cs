@@ -47,6 +47,15 @@ namespace NisGab
         private static void GenerateCodeFromAsset(InputActionAsset selectedObject)
         {
             string targetDirectory = GetTargetDirectory();
+            if (Directory.Exists(targetDirectory))
+            {
+                string[] files = Directory.GetFiles(targetDirectory, "*.*", SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    File.Delete(file);   
+                }
+            }
+
             ReadOnlyArray<InputActionMap> inputActionMaps = selectedObject.actionMaps;
             foreach (InputActionMap inputActionMap in inputActionMaps) { GenerateInputActionClass(inputActionMap, targetDirectory); }
 
@@ -87,7 +96,7 @@ namespace NisGab
             sb.AppendLine("\t\t\tif (this != null) { Destroy(this); }");
             sb.AppendLine("\t\t}");
             sb.AppendLine("");
-            
+
             foreach (InputActionMap inputActionMap in inputActionMaps)
             {
                 string mapName = inputActionMap.name;
