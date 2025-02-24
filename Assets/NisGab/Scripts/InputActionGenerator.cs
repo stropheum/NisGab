@@ -99,7 +99,6 @@ namespace NisGab
                 sb.AppendLine("");
             }
 
-            sb.AppendLine("");
             sb.AppendLine("\t\tprivate void Initialize()");
             sb.AppendLine("\t\t{");
             sb.AppendLine("\t\t\t_inputSystemActions = new InputSystemActions();");
@@ -109,8 +108,6 @@ namespace NisGab
                 sb.AppendLine("\t\t\t" + mapName + ".Bind(_inputSystemActions." + mapName + ");");
             }
 
-            sb.AppendLine("\t\t\t_inputSystemActions.Player.Enable();");
-            sb.AppendLine("\t\t\t_inputSystemActions.UI.Enable();");
             sb.AppendLine("\t\t}");
             sb.AppendLine("");
             sb.AppendLine("\t\tprivate void UnInitialize()");
@@ -166,7 +163,7 @@ namespace NisGab
             }
 
             sb.AppendLine("");
-            sb.AppendLine("\t\tpublic void Bind(InputSystemActions." + mapName + "Actions actions)");
+            sb.AppendLine("\t\tinternal void Bind(InputSystemActions." + mapName + "Actions actions)");
             sb.AppendLine("\t\t{");
 
             foreach (string actionName in actions.Select(action => action.name))
@@ -176,7 +173,7 @@ namespace NisGab
 
             sb.AppendLine("\t\t}");
             sb.AppendLine("");
-            sb.AppendLine("\t\tpublic void UnBind(InputSystemActions." + mapName + "Actions actions)");
+            sb.AppendLine("\t\tinternal void UnBind(InputSystemActions." + mapName + "Actions actions)");
             sb.AppendLine("\t\t{");
 
             foreach (InputAction action in actions)
