@@ -9,7 +9,7 @@ public class InputTester : MonoBehaviour
         InputEvent.Instance.EnablePlayerInput();
         InputEvent.Player.Attack += PlayerOnAttack;
     }
-
+    
     private void OnDestroy()
     {
         InputEvent.Instance.DisablePlayerInput();

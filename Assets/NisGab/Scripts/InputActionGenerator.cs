@@ -82,6 +82,12 @@ namespace NisGab
             sb.AppendLine("\t\t\tUnInitialize();");
             sb.AppendLine("\t\t}");
             sb.AppendLine("");
+            sb.AppendLine("\t\tprivate void OnApplicationQuit()");
+            sb.AppendLine("\t\t{");
+            sb.AppendLine("\t\t\tif (this != null) { Destroy(this); }");
+            sb.AppendLine("\t\t}");
+            sb.AppendLine("");
+            
             foreach (InputActionMap inputActionMap in inputActionMaps)
             {
                 string mapName = inputActionMap.name;
@@ -112,6 +118,7 @@ namespace NisGab
             sb.AppendLine("");
             sb.AppendLine("\t\tprivate void UnInitialize()");
             sb.AppendLine("\t\t{");
+            sb.AppendLine("\t\t\tif (_inputSystemActions == null) { return; }");
             foreach (InputActionMap inputActionMap in inputActionMaps)
             {
                 string mapName = inputActionMap.name;
