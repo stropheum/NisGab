@@ -127,13 +127,13 @@ namespace NisGab
 
             sb.AppendLine("\t\t}");
             sb.AppendLine("\t}");
-            sb.AppendLine("}");
+            sb.Append("}");
 
             if (!Directory.Exists(targetDirectory)) { Directory.CreateDirectory(targetDirectory); }
 
             string filePath = Path.Combine(targetDirectory, "InputEvent.cs");
 
-            File.WriteAllText(filePath, sb.ToString());
+            File.WriteAllText(filePath, sb.ToString().Replace("\r\n", "\n"), Encoding.UTF8);
             AssetDatabase.Refresh();
         }
 
@@ -144,7 +144,7 @@ namespace NisGab
             string filePath = Path.Combine(targetDirectory, mapName + "Inputactions.cs");
             if (!Directory.Exists(targetDirectory)) { Directory.CreateDirectory(targetDirectory); }
 
-            File.WriteAllText(filePath, classString);
+            File.WriteAllText(filePath, classString.Replace("\r\n", "\n"), Encoding.UTF8);
             AssetDatabase.Refresh();
         }
 
@@ -202,7 +202,7 @@ namespace NisGab
             }
 
             sb.AppendLine("\t}");
-            sb.AppendLine("}");
+            sb.Append("}");
 
             return sb.ToString();
         }
