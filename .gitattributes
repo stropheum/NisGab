@@ -28,7 +28,7 @@
 *.hdr filter=lfs diff=lfs merge=lfs
 
 # Ignore large generated cache files (you should exclude these in .gitignore)
-!Temp/*
-!Library/*
-!Logs/*
-!Builds/*
+\!Temp/*
+\!Library/*
+\!Logs/*
+\!Builds/*
