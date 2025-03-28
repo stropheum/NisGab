@@ -1,3 +1,4 @@
+GIT_CLONE_PROTECTION_ACTIVE=false
 * linguist-vendored
 *.cs linguist-vendored=false
 
