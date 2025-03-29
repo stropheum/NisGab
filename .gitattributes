@@ -26,9 +26,3 @@
 # Unity lighting and scene cache files (optional)
 *.exr filter=lfs diff=lfs merge=lfs
 *.hdr filter=lfs diff=lfs merge=lfs
-
-# Ignore large generated cache files (you should exclude these in .gitignore)
-\!Temp/*
-\!Library/*
-\!Logs/*
-\!Builds/*
