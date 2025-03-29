@@ -586,6 +586,15 @@
                     "processors": "",
                     "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenDevConsole",
+                    "type": "Button",
+                    "id": "e9459ac7-879e-4d44-9dae-8fb88a778696",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1026,6 +1035,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftMouseRelease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99dd589f-cbff-4fb8-b64b-3283cda93d7b",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenDevConsole",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
