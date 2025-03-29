@@ -5,11 +5,9 @@
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:3ae5734e49d646442ad24f37762ebdd2",
         "GUID:dc04f38471c3a459fb4d31124ee9127d",
+        "GUID:49e96017c3809e44588c94970a3bf3ce",
         "GUID:49e96017c3809e44588c94970a3bf3ce"
     ],
-    "dependencies": {
-        "com.stropheum.unitycodeextensions": "https://github.com/Stropheum/UnityCodeExtensions.git#main"
-    },
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
