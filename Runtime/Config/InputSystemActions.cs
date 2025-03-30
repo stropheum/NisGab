@@ -610,15 +610,6 @@ namespace NisGab
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=1)"",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""OpenDevConsole"",
-                    ""type"": ""Button"",
-                    ""id"": ""e9459ac7-879e-4d44-9dae-8fb88a778696"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1061,15 +1052,32 @@ namespace NisGab
                     ""action"": ""LeftMouseRelease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""DevConsole"",
+            ""id"": ""5913fcba-7a71-4286-9e6f-5cd2bca9bc38"",
+            ""actions"": [
+                {
+                    ""name"": ""Toggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""c987b04f-7f0e-4176-b34a-feabb59a2ce3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""99dd589f-cbff-4fb8-b64b-3283cda93d7b"",
+                    ""id"": ""e3711734-d714-4c19-aa49-6385b0636bb3"",
                     ""path"": ""<Keyboard>/backquote"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenDevConsole"",
+                    ""action"": ""Toggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1164,13 +1172,16 @@ namespace NisGab
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
             m_UI_LeftMousePress = m_UI.FindAction("LeftMousePress", throwIfNotFound: true);
             m_UI_LeftMouseRelease = m_UI.FindAction("LeftMouseRelease", throwIfNotFound: true);
-            m_UI_OpenDevConsole = m_UI.FindAction("OpenDevConsole", throwIfNotFound: true);
+            // DevConsole
+            m_DevConsole = asset.FindActionMap("DevConsole", throwIfNotFound: true);
+            m_DevConsole_Toggle = m_DevConsole.FindAction("Toggle", throwIfNotFound: true);
         }
 
         ~@InputSystemActions()
         {
             UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystemActions.Player.Disable() has not been called.");
             UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystemActions.UI.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_DevConsole.enabled, "This will cause a leak and performance issues, InputSystemActions.DevConsole.Disable() has not been called.");
         }
 
         public void Dispose()
@@ -1354,7 +1365,6 @@ namespace NisGab
         private readonly InputAction m_UI_TrackedDeviceOrientation;
         private readonly InputAction m_UI_LeftMousePress;
         private readonly InputAction m_UI_LeftMouseRelease;
-        private readonly InputAction m_UI_OpenDevConsole;
         public struct UIActions
         {
             private @InputSystemActions m_Wrapper;
@@ -1371,7 +1381,6 @@ namespace NisGab
             public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
             public InputAction @LeftMousePress => m_Wrapper.m_UI_LeftMousePress;
             public InputAction @LeftMouseRelease => m_Wrapper.m_UI_LeftMouseRelease;
-            public InputAction @OpenDevConsole => m_Wrapper.m_UI_OpenDevConsole;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1417,9 +1426,6 @@ namespace NisGab
                 @LeftMouseRelease.started += instance.OnLeftMouseRelease;
                 @LeftMouseRelease.performed += instance.OnLeftMouseRelease;
                 @LeftMouseRelease.canceled += instance.OnLeftMouseRelease;
-                @OpenDevConsole.started += instance.OnOpenDevConsole;
-                @OpenDevConsole.performed += instance.OnOpenDevConsole;
-                @OpenDevConsole.canceled += instance.OnOpenDevConsole;
             }
 
             private void UnregisterCallbacks(IUIActions instance)
@@ -1460,9 +1466,6 @@ namespace NisGab
                 @LeftMouseRelease.started -= instance.OnLeftMouseRelease;
                 @LeftMouseRelease.performed -= instance.OnLeftMouseRelease;
                 @LeftMouseRelease.canceled -= instance.OnLeftMouseRelease;
-                @OpenDevConsole.started -= instance.OnOpenDevConsole;
-                @OpenDevConsole.performed -= instance.OnOpenDevConsole;
-                @OpenDevConsole.canceled -= instance.OnOpenDevConsole;
             }
 
             public void RemoveCallbacks(IUIActions instance)
@@ -1480,6 +1483,52 @@ namespace NisGab
             }
         }
         public UIActions @UI => new UIActions(this);
+
+        // DevConsole
+        private readonly InputActionMap m_DevConsole;
+        private List<IDevConsoleActions> m_DevConsoleActionsCallbackInterfaces = new List<IDevConsoleActions>();
+        private readonly InputAction m_DevConsole_Toggle;
+        public struct DevConsoleActions
+        {
+            private @InputSystemActions m_Wrapper;
+            public DevConsoleActions(@InputSystemActions wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Toggle => m_Wrapper.m_DevConsole_Toggle;
+            public InputActionMap Get() { return m_Wrapper.m_DevConsole; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(DevConsoleActions set) { return set.Get(); }
+            public void AddCallbacks(IDevConsoleActions instance)
+            {
+                if (instance == null || m_Wrapper.m_DevConsoleActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_DevConsoleActionsCallbackInterfaces.Add(instance);
+                @Toggle.started += instance.OnToggle;
+                @Toggle.performed += instance.OnToggle;
+                @Toggle.canceled += instance.OnToggle;
+            }
+
+            private void UnregisterCallbacks(IDevConsoleActions instance)
+            {
+                @Toggle.started -= instance.OnToggle;
+                @Toggle.performed -= instance.OnToggle;
+                @Toggle.canceled -= instance.OnToggle;
+            }
+
+            public void RemoveCallbacks(IDevConsoleActions instance)
+            {
+                if (m_Wrapper.m_DevConsoleActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IDevConsoleActions instance)
+            {
+                foreach (var item in m_Wrapper.m_DevConsoleActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_DevConsoleActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public DevConsoleActions @DevConsole => new DevConsoleActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         public InputControlScheme KeyboardMouseScheme
         {
@@ -1551,7 +1600,10 @@ namespace NisGab
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
             void OnLeftMousePress(InputAction.CallbackContext context);
             void OnLeftMouseRelease(InputAction.CallbackContext context);
-            void OnOpenDevConsole(InputAction.CallbackContext context);
+        }
+        public interface IDevConsoleActions
+        {
+            void OnToggle(InputAction.CallbackContext context);
         }
     }
 }

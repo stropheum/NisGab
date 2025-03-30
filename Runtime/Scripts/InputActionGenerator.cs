@@ -69,7 +69,7 @@ namespace NisGab
             sb.Append(Header);
             sb.AppendLine("namespace " + OutputNamespace);
             sb.AppendLine("{");
-            sb.AppendLine("\tpublic class InputEvent : LazySingleton<InputEvent>");
+            sb.AppendLine("\tpublic class InputEvent : UnityCodeExtensions.LazySingleton<InputEvent>");
             sb.AppendLine("\t{");
             foreach (InputActionMap inputActionMap in inputActionMaps)
             {
