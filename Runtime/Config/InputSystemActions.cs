@@ -1067,6 +1067,33 @@ namespace NisGab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AutoComplete"",
+                    ""type"": ""Button"",
+                    ""id"": ""6d5389ae-c2a1-49f2-bf7e-1020c2f05dbb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousSuggestion"",
+                    ""type"": ""Button"",
+                    ""id"": ""185cd788-cdfc-4924-b7a9-fbb1784bb046"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextSuggestion"",
+                    ""type"": ""Button"",
+                    ""id"": ""c432658c-f0d7-47b4-9155-11660359b4a9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1078,6 +1105,39 @@ namespace NisGab
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4b37a27-7258-4299-9394-91fefd13ba98"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""AutoComplete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48de3789-9c1a-40b9-9f87-50d179ecffb5"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousSuggestion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""424d5aa4-2756-4668-9811-376f45717e83"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextSuggestion"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1175,6 +1235,9 @@ namespace NisGab
             // DevConsole
             m_DevConsole = asset.FindActionMap("DevConsole", throwIfNotFound: true);
             m_DevConsole_Toggle = m_DevConsole.FindAction("Toggle", throwIfNotFound: true);
+            m_DevConsole_AutoComplete = m_DevConsole.FindAction("AutoComplete", throwIfNotFound: true);
+            m_DevConsole_PreviousSuggestion = m_DevConsole.FindAction("PreviousSuggestion", throwIfNotFound: true);
+            m_DevConsole_NextSuggestion = m_DevConsole.FindAction("NextSuggestion", throwIfNotFound: true);
         }
 
         ~@InputSystemActions()
@@ -1488,11 +1551,17 @@ namespace NisGab
         private readonly InputActionMap m_DevConsole;
         private List<IDevConsoleActions> m_DevConsoleActionsCallbackInterfaces = new List<IDevConsoleActions>();
         private readonly InputAction m_DevConsole_Toggle;
+        private readonly InputAction m_DevConsole_AutoComplete;
+        private readonly InputAction m_DevConsole_PreviousSuggestion;
+        private readonly InputAction m_DevConsole_NextSuggestion;
         public struct DevConsoleActions
         {
             private @InputSystemActions m_Wrapper;
             public DevConsoleActions(@InputSystemActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Toggle => m_Wrapper.m_DevConsole_Toggle;
+            public InputAction @AutoComplete => m_Wrapper.m_DevConsole_AutoComplete;
+            public InputAction @PreviousSuggestion => m_Wrapper.m_DevConsole_PreviousSuggestion;
+            public InputAction @NextSuggestion => m_Wrapper.m_DevConsole_NextSuggestion;
             public InputActionMap Get() { return m_Wrapper.m_DevConsole; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1505,6 +1574,15 @@ namespace NisGab
                 @Toggle.started += instance.OnToggle;
                 @Toggle.performed += instance.OnToggle;
                 @Toggle.canceled += instance.OnToggle;
+                @AutoComplete.started += instance.OnAutoComplete;
+                @AutoComplete.performed += instance.OnAutoComplete;
+                @AutoComplete.canceled += instance.OnAutoComplete;
+                @PreviousSuggestion.started += instance.OnPreviousSuggestion;
+                @PreviousSuggestion.performed += instance.OnPreviousSuggestion;
+                @PreviousSuggestion.canceled += instance.OnPreviousSuggestion;
+                @NextSuggestion.started += instance.OnNextSuggestion;
+                @NextSuggestion.performed += instance.OnNextSuggestion;
+                @NextSuggestion.canceled += instance.OnNextSuggestion;
             }
 
             private void UnregisterCallbacks(IDevConsoleActions instance)
@@ -1512,6 +1590,15 @@ namespace NisGab
                 @Toggle.started -= instance.OnToggle;
                 @Toggle.performed -= instance.OnToggle;
                 @Toggle.canceled -= instance.OnToggle;
+                @AutoComplete.started -= instance.OnAutoComplete;
+                @AutoComplete.performed -= instance.OnAutoComplete;
+                @AutoComplete.canceled -= instance.OnAutoComplete;
+                @PreviousSuggestion.started -= instance.OnPreviousSuggestion;
+                @PreviousSuggestion.performed -= instance.OnPreviousSuggestion;
+                @PreviousSuggestion.canceled -= instance.OnPreviousSuggestion;
+                @NextSuggestion.started -= instance.OnNextSuggestion;
+                @NextSuggestion.performed -= instance.OnNextSuggestion;
+                @NextSuggestion.canceled -= instance.OnNextSuggestion;
             }
 
             public void RemoveCallbacks(IDevConsoleActions instance)
@@ -1604,6 +1691,9 @@ namespace NisGab
         public interface IDevConsoleActions
         {
             void OnToggle(InputAction.CallbackContext context);
+            void OnAutoComplete(InputAction.CallbackContext context);
+            void OnPreviousSuggestion(InputAction.CallbackContext context);
+            void OnNextSuggestion(InputAction.CallbackContext context);
         }
     }
 }
