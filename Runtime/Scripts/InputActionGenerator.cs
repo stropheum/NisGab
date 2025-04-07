@@ -52,7 +52,7 @@ namespace NisGab
                 string[] files = Directory.GetFiles(targetDirectory, "*.*", SearchOption.AllDirectories);
                 foreach (string file in files)
                 {
-                    File.Delete(file);   
+                    File.Delete(file);
                 }
             }
 
