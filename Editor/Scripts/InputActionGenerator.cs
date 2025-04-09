@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace NisGab
+namespace Editor.NisGab
 {
     internal static class InputActionGenerator
     {
@@ -46,7 +46,7 @@ namespace NisGab
 
         private static void GenerateCodeFromAsset(InputActionAsset selectedObject)
         {
-            string targetDirectory = GetTargetDirectory();
+            string targetDirectory = GetTargetDirectory(selectedObject);
             if (Directory.Exists(targetDirectory))
             {
                 string[] files = Directory.GetFiles(targetDirectory, "*.*", SearchOption.AllDirectories);
@@ -55,17 +55,21 @@ namespace NisGab
                     File.Delete(file);
                 }
             }
-
+            
             ReadOnlyArray<InputActionMap> inputActionMaps = selectedObject.actionMaps;
-            foreach (InputActionMap inputActionMap in inputActionMaps) { GenerateInputActionClass(inputActionMap, targetDirectory); }
+            foreach (InputActionMap inputActionMap in inputActionMaps)
+            {
+                GenerateInputActionClass(inputActionMap, targetDirectory);
+            }
 
             GenerateInputEventClass(inputActionMaps, targetDirectory);
         }
 
-        private static void GenerateInputEventClass(ReadOnlyArray<InputActionMap> inputActionMaps, string targetDirectory)
+        private static void GenerateInputEventClass(
+            ReadOnlyArray<InputActionMap> inputActionMaps, string targetDirectory)
         {
             StringBuilder sb = new();
-
+            
             sb.Append(Header);
             sb.AppendLine("namespace " + OutputNamespace);
             sb.AppendLine("{");
@@ -216,25 +220,15 @@ namespace NisGab
             return sb.ToString();
         }
 
-        private static string GetTargetDirectory()
+        private static string GetTargetDirectory(InputActionAsset selectedObject)
         {
-            string[] foundAssets = AssetDatabase.FindAssets("NisGab t:AssemblyDefinitionAsset");
-            if (foundAssets.Length == 0)
-            {
-                Debug.LogError("Not Assembly definition found for NisGab");
-                return null;
-            }
-
-            if (foundAssets.Length > 1)
-            {
-                Debug.LogWarning("More than one Assembly definition found for NisGab. Defaulting to first index");
-            }
-
-            string asmPath = Path.GetDirectoryName(AssetDatabase.GUIDToAssetPath(foundAssets[0]));
-            if (!string.IsNullOrEmpty(asmPath)) { return Path.Combine(asmPath, "Scripts", "Generated"); }
-
-            Debug.LogError("Asset path for NisGab not found");
-            return null;
+            Debug.Assert(selectedObject != null, "Selected InputActionAsset is null.");
+            string assetPath = AssetDatabase.GetAssetPath(selectedObject);
+            Debug.Assert(!string.IsNullOrEmpty(assetPath), "Could not find asset path for the selected InputActionAsset.");
+            string directory = Path.GetDirectoryName(assetPath);
+            Debug.Assert(!string.IsNullOrEmpty(directory), "Could not determine directory for the selected InputActionAsset.");
+            Debug.Log("Generated files in directory: " + Path.Combine(directory, "Scripts", "Generated"));
+            return Path.Combine(directory, "Generated");
         }
     }
 }
