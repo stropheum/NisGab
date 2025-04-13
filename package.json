@@ -12,7 +12,7 @@
     }
   ],
   "dependencies": {
-    "com.stropheum.unitycodeextensions": "https://github.com/stropheum/UnityCodeExtensions.git#main",
+    "com.stropheum.unitycodeextensions": "https://github.com/stropheum/UnityCodeExtensions.git#v1.0.0",
     "com.unity.inputsystem": "1.11.2"
   },
   "repository": {
