@@ -1,11 +1,12 @@
 {
-    "name": "NisGab",
-    "rootNamespace": "NisGab",
+    "name": "Editor.NisGab",
+    "rootNamespace": "Editor.NisGab",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:49e96017c3809e44588c94970a3bf3ce"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

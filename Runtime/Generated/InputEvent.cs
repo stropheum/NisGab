@@ -11,10 +11,11 @@
 
 namespace NisGab
 {
-	public class InputEvent : LazySingleton<InputEvent>
+	public class InputEvent : UnityCodeExtensions.LazySingleton<InputEvent>
 	{
 		public static PlayerInputActions Player { get; private set; } = new();
 		public static UIInputActions UI { get; private set; } = new();
+		public static DevConsoleInputActions DevConsole { get; private set; } = new();
 
 		private InputSystemActions _inputSystemActions;
 
@@ -58,11 +59,24 @@ namespace NisGab
 			_inputSystemActions.UI.Disable();
 		}
 
+		public void EnableDevConsoleInput()
+		{
+		    if (_inputSystemActions.DevConsole.enabled) { return; }
+		    _inputSystemActions.DevConsole.Enable();
+		}
+
+		public void DisableDevConsoleInput()
+		{
+			if (!_inputSystemActions.DevConsole.enabled) { return; }
+			_inputSystemActions.DevConsole.Disable();
+		}
+
 		private void Initialize()
 		{
 			_inputSystemActions = new InputSystemActions();
 			Player.Bind(_inputSystemActions.Player);
 			UI.Bind(_inputSystemActions.UI);
+			DevConsole.Bind(_inputSystemActions.DevConsole);
 		}
 
 		private void UnInitialize()
@@ -70,6 +84,7 @@ namespace NisGab
 			if (_inputSystemActions == null) { return; }
 			Player.UnBind(_inputSystemActions.Player);
 			UI.UnBind(_inputSystemActions.UI);
+			DevConsole.UnBind(_inputSystemActions.DevConsole);
 		}
 	}
 }
