@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
+// version bump
+
 namespace Editor.NisGab
 {
     internal static class InputActionGenerator
