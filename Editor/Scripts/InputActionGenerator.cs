@@ -10,6 +10,7 @@ namespace Editor.NisGab
 {
     internal static class InputActionGenerator
     {
+        //
         private const string ContextMenuName = "Assets/Generate Input Action Binding";
         private const string OutputNamespace = "NisGab";
 
