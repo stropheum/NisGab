@@ -36,7 +36,7 @@ namespace Editor.NisGab
             return Selection.activeObject is InputActionAsset;
         }
 
-        private static void GenerateCodeFromAsset(InputActionAsset selectedObject, assetName, string assetVariableName)
+        private static void GenerateCodeFromAsset(InputActionAsset selectedObject, string assetName, string assetVariableName)
         {
             string targetDirectory = GetTargetDirectory(selectedObject);
             if (Directory.Exists(targetDirectory))
