@@ -1,2 +1,4 @@
 # Nisgab
-### New Input System Global Action Binding
+_New Input System Global Action Binding_
+
+---
