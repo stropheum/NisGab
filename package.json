@@ -1,6 +1,6 @@
 {
   "name": "com.stropheum.nisgab",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "unity": "2023.1",
   "displayName": "NisGab",
   "description": "New Input system Global Action Binder - Easy to use, performant input system generator",
@@ -12,7 +12,6 @@
     }
   ],
   "dependencies": {
-    "com.stropheum.unitycodeextensions": "1.0.0",
     "com.unity.inputsystem": "1.11.2"
   },
   "repository": {

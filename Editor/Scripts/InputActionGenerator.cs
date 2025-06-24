@@ -25,7 +25,8 @@ namespace Editor.NisGab
             }
 
             string assetName = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(selectedObject));
-            string assetVariableName = char.ToLowerInvariant(assetName[0]) + assetName.Substring(1);
+            assetName = char.ToUpperInvariant(assetName[0]) + assetName[1..];
+            string assetVariableName = char.ToLowerInvariant(assetName[0]) + assetName[1..];
             GenerateCodeFromAsset(selectedObject, assetName, assetVariableName);
 
         }
@@ -79,7 +80,7 @@ namespace Editor.NisGab
             sb.Append(CreateHeader(assetName));
             sb.AppendLine("namespace " + OutputNamespace);
             sb.AppendLine("{");
-            sb.AppendLine("\tpublic class InputEvent : UnityCodeExtensions.LazySingleton<InputEvent>");
+            sb.AppendLine("\tpublic class InputEvent : LazySingleton<InputEvent>");
             sb.AppendLine("\t{");
             foreach (InputActionMap inputActionMap in inputActionMaps)
             {
